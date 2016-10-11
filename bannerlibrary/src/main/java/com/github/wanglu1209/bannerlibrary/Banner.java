@@ -1,6 +1,8 @@
 package com.github.wanglu1209.bannerlibrary;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -94,10 +96,10 @@ public class Banner extends FrameLayout {
      * 添加到任务栈,当前所有任务完事之后添加已经选中的那个小圆点
      */
     post(new Runnable() {
-      @Override public void run() {
+      @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP) @Override public void run() {
         ImageView iv = new ImageView(mContext);
         Log.d("--------->", "run: ");
-        iv.setImageDrawable(mContext.getResources().getDrawable(mDot[1]));
+        iv.setImageDrawable(mContext.getResources().getDrawable(mDot[1],null));
         FrameLayout.LayoutParams params =
             new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -143,7 +145,7 @@ public class Banner extends FrameLayout {
     });
   }
 
-  public Banner setAdapter(BannerPagerAdapter adapter) {
+  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP) public Banner setAdapter(BannerPagerAdapter adapter) {
     mAdapter = adapter;
     mPager.setAdapter(mAdapter);
     mPager.setCurrentItem(mAdapter.size);
@@ -159,7 +161,7 @@ public class Banner extends FrameLayout {
      */
     for (int i = 0; i < mAdapter.size; i++) {
       ImageView iv = new ImageView(mContext);
-      iv.setImageDrawable(mContext.getResources().getDrawable(mDot[0]));
+      iv.setImageDrawable(mContext.getResources().getDrawable(mDot[0],null));
       iv.setLayoutParams(dotParams);
       mDotGroup.addView(iv);
     }
